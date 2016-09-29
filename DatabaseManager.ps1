@@ -1,13 +1,12 @@
-Configuration Clean-Installation {
-   
-    Import-DscResource -ModuleName xsqlserver
+Configuration Clean-Installation2 {
+    Import-DscResource -ModuleName PSDesiredStateConfiguration
 
-    xSQLServerDatabase xx {
-        Name = "xx"
-        Ensure = "Absent"
-        SQLServer = "asdfaf"
-        SQLInstanceName = "asdfadf"
+    node localhost {
+        Log ParamLog {
+            Message = "Just a test"
+        }
     }
+  
 
 }
 
