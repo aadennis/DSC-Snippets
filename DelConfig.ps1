@@ -10,10 +10,20 @@
 # WebSiteConfig
 # Start-DscConfiguration -Path WebSiteConfig -CimSession $session -Wait -Verbose -Force
 # https://weblog.west-wind.com/posts/2013/Oct/02/Use-IIS-Application-Initialization-for-keeping-ASPNET-Apps-alive#GettingstartedwithApplicationInitialization
-
+#https://gallery.technet.microsoft.com/scriptcenter/xDatabase-PowerShell-0db6cdaf
+#Install-Module -Name xDatabase
+#https://www.powershellgallery.com/packages/xDatabase/1.4.0.0
+#https://github.com/PowerShell/xDatabase
+#http://go.microsoft.com/fwlink/?LinkId=393729
+#CleanUp -Credentials $Credentials
+#iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
+# choco install sql2014.smo (no 2016 yet)
+# https://msdn.microsoft.com/en-us/library/hh245202.aspx - refers to 2016
+# https://msdn.microsoft.com/en-us/library/hh231286.aspx#Security
 
 Configuration Cleanup {
     Import-DscResource -ModuleName 'PSDesiredStateConfiguration'
+    Import-DscResource -Module 'xDatabase'
 
     Node DENMOT {
         
@@ -31,6 +41,14 @@ Configuration Cleanup {
             Recurse = $true
             DestinationPath = "C:\ProgramData\SomeTest"
             Force = $true
+        }
+
+        xDatabase xx {
+            Ensure = "Absent"
+            SqlServer = $env:COMPUTERNAME
+            SqlServerVersion = "2014"
+            DatabaseName = "ttoo"
+            Credentials = New-Object System.Management.Automation.PSCredential("sa", (ConvertTo-SecureString "Hornetsnest99!" -AsPlainText -Force))
         }
     }
 }
