@@ -49,7 +49,15 @@ Configuration Cleanup {
             GetScript = {"GetScript seems to do nothing - defect?"}
             SetScript = {"SetScript seems to do nothing - defect?"}
             TestScript = {
+                $sqlFile  = "F:\Code\DSC\drop_db.sql"
+                $user = "adguy"
+                $pw = "paSSWORDXX`!"
+                $cmd = "sqlcmd -U $user -P $pw -i $sqlFile"
+                Write-Verbose "Running [$sqlFile]"
+                Invoke-Expression $cmd | Write-Verbose
+                $false # and whether this is true or false seems to have no impact
+            }
         }
-    }
+
    }    
 }
