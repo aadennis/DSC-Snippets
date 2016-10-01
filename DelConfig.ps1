@@ -20,6 +20,8 @@
 # choco install sql2014.smo (no 2016 yet)
 # https://msdn.microsoft.com/en-us/library/hh245202.aspx - refers to 2016
 # https://msdn.microsoft.com/en-us/library/hh231286.aspx#Security
+# sqlcmd -U adguy -P thepassword -Q "create database db1"
+# https://msdn.microsoft.com/en-us/powershell/dsc/scriptresource
 
 Configuration Cleanup {
     Import-DscResource -ModuleName 'PSDesiredStateConfiguration'
@@ -43,12 +45,11 @@ Configuration Cleanup {
             Force = $true
         }
 
-        xDatabase xx {
-            Ensure = "Absent"
-            SqlServer = $env:COMPUTERNAME
-            SqlServerVersion = "2014"
-            DatabaseName = "ttoo"
-            Credentials = New-Object System.Management.Automation.PSCredential("sa", (ConvertTo-SecureString "Hornetsnest99!" -AsPlainText -Force))
+        Script DropTheDatabases {
+            GetScript = {"GetScript seems to do nothing - defect?"}
+            SetScript = {"SetScript seems to do nothing - defect?"}
+            TestScript = {
         }
     }
+   }    
 }
